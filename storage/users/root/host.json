@@ -1,0 +1,47 @@
+{
+	"owner": "root",
+	"data": [
+		{
+			"name": "main",
+			"config_file": "/opt/teapanel-nginx/storage/users/root/hosts/main",
+			"domains": [
+				"root.localhost"
+			],
+			"listens": [
+				"80"
+			],
+			"index": "index.php",
+			"document_root": "/root/web/main/public",
+			"error_log": "/root/web/main/logs/error.log",
+			"access_log": "/root/web/main/logs/error.log",
+			"locations": [
+				{
+					"name": "/",
+					"components": [
+						{
+							"name": "try_files",
+							"param": "$uri $uri/ =404"
+						}
+					]
+				},
+				{
+					"name": "~ \\.php$",
+					"components": [
+						{
+							"name": "include",
+							"params": [
+								"snippets/fastcgi-php.conf"
+							]
+						},
+						{
+							"name": "fastcgi_pass",
+							"params": [
+								"127.0.0.1:34440"
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

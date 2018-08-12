@@ -1,0 +1,21 @@
+
+server {
+
+    listen 64444;
+    listen [::]:64444;
+
+    index       index.php;
+
+    root        /opt/teapanel-nginx/public;
+    error_logs  /opt/teapanel-nginx/storage/panel_logs/panel_error.log;
+    access_logs /opt/teapanel-nginx/storage/panel_logs/panel_access.log;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+    }
+}

@@ -88,6 +88,7 @@ if (@link($panelconfig, $panelconfig_symlink)) {
 icelog("Restarting nginx service...");
 if (! preg_match("/success/", icexec("systemctl restart nginx && echo success"))) {
 	icexec("An error occured when restarting nginx");
+	exit(1);
 }
 
 if (file_exists($phpsystemd)) {

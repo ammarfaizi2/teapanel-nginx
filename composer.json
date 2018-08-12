@@ -1,0 +1,14 @@
+{
+    "name": "ammarfaizi2/tnginx",
+    "description": "Control Panel for Nginx",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ammar Faizi",
+            "email": "ammarfaizi2@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}

@@ -132,6 +132,16 @@ if ($ok) {
 	if (!$n) {
 		icelog("Could not find [www] state");
 	}
+	$s = str_replace("user = www-data", "user = root", $s, $n);
+	if ((!$n) && (!preg_match("/user\s?=\s?root/Usi", $s))) {
+		icelog("Could not find the user variable in %s", $phpfpm_defaultpoold);
+		exit(1);
+	}
+	$s = str_replace("group = www-data", "group = root", $s, $n);
+	if ((!$n) && (!preg_match("/group\s?=\s?root/Usi", $s))) {
+		icelog("Could not find the group variable in %s", $phpfpm_defaultpoold);
+		exit(1);
+	}
 	$s = str_replace("listen.owner = www-data", "listen.owner = root", $s, $n);
 	if ((!$n) && (!preg_match("/listen\.owner\s?=\s?root/Usi", $s))) {
 		icelog("Could not find the listen.owner variable in %s", $phpfpm_defaultpoold);
@@ -140,6 +150,11 @@ if ($ok) {
 	$s = str_replace("listen.group = www-data", "listen.group = root", $s, $n);
 	if ((!$n) && (!preg_match("/listen\.group\s?=\s?root/Usi", $s))) {
 		icelog("Could not find the listen.group variable in %s", $phpfpm_defaultpoold);
+		exit(1);
+	}
+	$s = str_replace("listen = /run/php/php7.2-fpm.sock", "listen = 127.0.0.1:34440", $s, $n);
+	if (!$n) {
+		icelog("Could not find php-fpm unix socket");
 		exit(1);
 	}
 
@@ -154,9 +169,20 @@ if ($ok) {
 	if (!$n) {
 		icelog("Could not find [teapanel-master] state");
 	}
+	$s = str_replace("user = root", "user = $paneluser", $s, $n);
+	if ((!$n) && (!preg_match("/user\s?=\s?$paneluser/Usi", $s))) {
+		icelog("Could not find the user variable in %s", $phpfpm_defaultpoold);
+		exit(1);
+	}
+	$s = str_replace("group = root", "group = $paneluser", $s, $n);
+	if ((!$n) && (!preg_match("/group\s?=\s?$paneluser/Usi", $s))) {
+		icelog("Could not find the group variable in %s", $phpfpm_defaultpoold);
+		exit(1);
+	}
+	
 	$s = str_replace("listen.owner = root", "listen.owner = $paneluser", $s, $n);
 	$s = str_replace("listen.group = root", "listen.group = $paneluser", $s, $n);
-	$s = str_replace("listen = /run/php/php7.2-fpm.sock", "listen = 127.0.0.1:34441", $s, $n);
+	$s = str_replace("listen = 127.0.0.1:34440", "listen = 127.0.0.1:34441", $s, $n);
 	
 	if (!$n) {
 		icelog("Could not find php-fpm unix socket");
